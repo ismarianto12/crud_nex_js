@@ -1,28 +1,46 @@
 import { local } from 'pos/lexicon';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Router from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
+import Login from '../pages/login';
 export default function Templates({ container }) {
     const [collapsed, setCollapsed] = useState(false);
+    const [modal, setModal] = useState(false);
+    const [val, setVal] = useState({
+        event: ''
+    });
+    const [logged, setLogged] = useState(false);
     const [activeMenu, setActiveMenu] = useState('transaction');
-
     const [loc, setLoc] = useState({
         username: ''
     });
+
     useEffect(() => {
         const kl = localStorage.getItem('sess_app');
         const loc = JSON.parse(kl);
-
         const parsing = (kl == null) ? '' : loc.username
+        const logged = (parsing) ? setLogged(true) : setLogged(false);
         setLoc({
             username: parsing
         });
-    }, []);
+        let a = {
+            b: 12,
+            func: function () {
+                return 1 * a.b;
+            }
+        }
+        setVal({
+            event: a.func()
+        })
+        if (logged == false) {
+            Router.push('login');
+        }
+    }, [logged]);
 
     const handleClick = (e) => {
-        console.log(e);
+        // console.log(e);
         e.preventDefault();
         setCollapsed(false);
 
@@ -32,7 +50,12 @@ export default function Templates({ container }) {
             setCollapsed(true);
         }
     }
+
+    console.log(logged);
+
     return (
+
+
         <>
             <Head>
 
@@ -44,7 +67,7 @@ export default function Templates({ container }) {
                     {/* Logo Header */}
                     <div className="logo-header" data-background-color="blue">
                         <a href="index.html" className="logo">
-                            Admin
+
                         </a>
                         <button
                             className="navbar-toggler sidenav-toggler ml-auto"
@@ -428,7 +451,7 @@ export default function Templates({ container }) {
                                                 </Link>
                                             </li>
                                             <li>
-                                                <Link href="/">
+                                                <Link href="/jenis">
 
                                                     <a>
                                                         <span className="sub-item">Jenis</span>
@@ -757,6 +780,8 @@ export default function Templates({ container }) {
             </div>
 
         </>
+
+
     )
 
 }
