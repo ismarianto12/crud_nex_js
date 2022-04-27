@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react"
 import Templates from "../../compnents/templates"
 import { useRouter } from 'next/router'
-import { eventually } from "pos/lexicon";
+// import { eventually } from "pos/lexicon";
 import Router from 'next/router';
 import { Modal, Button } from 'react-bootstrap';
 export default function Kategori() {
@@ -154,6 +154,11 @@ export default function Kategori() {
 
 
 function Kl({ open }) {
+
+
+    const onHide = () => {
+
+    }
     return (
         <>
             <Modal show={true} onHide={false}>
@@ -162,14 +167,20 @@ function Kl({ open }) {
                 </Modal.Header>
                 <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
                 <Modal.Footer>
-                    {/* <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button> */}
+
                 </Modal.Footer>
             </Modal>
         </>
     )
 }
+
+
+// export const getStaticProps = async (context) => {
+//     const filePath = buildFeedbackPath();
+//     const data = await extractFileData(filePath);
+//     return {
+//         props: {
+//             data,
+//         },
+//     };
+// };
