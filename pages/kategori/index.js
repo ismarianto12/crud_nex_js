@@ -1,7 +1,6 @@
 import Templates from "../../compnents/templates";
 import Link from 'next/link'
-// import { fetch } from "pos/lexicon";
-
+ 
 
 function Paging({ count }) {
 

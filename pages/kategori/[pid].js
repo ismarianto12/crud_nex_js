@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from "react"
 import Templates from "../../compnents/templates"
 import { useRouter } from 'next/router'
-import { eventually } from "pos/lexicon";
 import Router from 'next/router';
 import { Modal, Button } from 'react-bootstrap';
 
@@ -53,7 +52,7 @@ export default function Kategori() {
                 alert('jenis file tidak di dukung');
             }
         }
-    } 
+    }
     useEffect(() => {
         if (pid == 'edit') {
             setValue({
