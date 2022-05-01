@@ -5,8 +5,11 @@ import Router from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Login from '../pages/login';
+import datamenu from '/compnents/navbarData.json';
+
+
 export default function Templates({ container }) {
-    const [collapsed, setCollapsed] = useState(false);
+    const [collapsed, setCollapsed] = useState('');
     const [modal, setModal] = useState(false);
     const [val, setVal] = useState({
         event: ''
@@ -18,6 +21,8 @@ export default function Templates({ container }) {
     });
 
     useEffect(() => {
+
+        // const data = 
         const kl = localStorage.getItem('sess_app');
         const loc = JSON.parse(kl);
         const parsing = (kl == null) ? '' : loc.username
@@ -40,22 +45,20 @@ export default function Templates({ container }) {
     }, [logged]);
 
     const handleClick = (e) => {
-        // console.log(e);
         e.preventDefault();
-        setCollapsed(false);
-
-        if (collapsed) {
-            setCollapsed(false);
+        const currentLocation = window.location.pathname;
+        console.log(e.currentTarget.id);
+        const attrcurrent = e.currentTarget.getAttribute('id')
+        console.log(attrcurrent === collapsed)
+        if (attrcurrent == collapsed) {
+            setCollapsed('')
+            attrcurrent ? setCollapsed(attrcurrent) : setCollapsed('');
         } else {
-            setCollapsed(true);
+            setCollapsed(attrcurrent)
         }
     }
-
-    console.log(logged);
-
+    const ls = datamenu;
     return (
-
-
         <>
             <Head>
 
@@ -435,57 +438,39 @@ export default function Templates({ container }) {
                                     <h4 className="text-section">Components</h4>
                                 </li>
 
-                                <li onClick={handleClick} id="base" className={collapsed ? 'nav-item submenu' : 'nav-item'}>
-                                    <a data-toggle="collapse" href="#ssss" className={collapsed ? 'aria-expanded="true"' : ''}>
+                                <li onClick={(e) => {
+                                    handleClick(e)
+                                }} id="kategori" className={collapsed === 'kategori' ? 'nav-item submenu' : 'nav-item'}>
+                                    <a data-toggle="collapse" href="#kategori" className={collapsed ? 'aria-expanded="true"' : ''}>
                                         <i className="fa fa-list" />
                                         <p>Master</p>
                                         <span className="caret" />
                                     </a>
-                                    <div className={collapsed ? 'collapse show' : 'collapse'} id="ssss">
+                                    <div className={collapsed === 'kategori' ? 'collapse show' : 'collapse'} id="kategori">
                                         <ul className="nav nav-collapse">
-                                            <li>
-                                                <Link href="/kategori">
-                                                    <a>
-                                                        <span className="sub-item">Kategori</span>
-                                                    </a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/jenis">
+                                            {
+                                                datamenu.map((a, b) => {
+                                                    return (<>
+                                                        <li>
+                                                            <Link href={a.path}>
 
-                                                    <a>
-                                                        <span className="sub-item">Jenis</span>
-                                                    </a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/barang">
-                                                    <a>
-                                                        <span className="sub-item">Barang</span>
-                                                    </a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/purchase">
-                                                    <a>
-                                                        <span className="sub-item">Purchase</span>
-                                                    </a>
-                                                </Link>
-                                            </li>
-                                            <li>
-                                                <Link href="/return">
-                                                    <a>
-                                                        <span className="sub-item">Return</span>
-                                                    </a>
-                                                </Link>
-                                            </li>
+                                                                <a>
+                                                                    <span className="sub-item">{a.name}</span>
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    </>
+                                                    )
+                                                })}
 
                                         </ul>
                                     </div>
                                 </li>
 
-                                <li onClick={handleClick.bind(this)} id="aplikasi" className={collapsed ? 'nav-item submenu' : 'nav-item'}>
-                                    <a data-toggle="collapse" href="#base" className={collapsed ? 'aria-expanded="true"' : ''}>
+                                <li onClick={(e) => {
+                                    handleClick(e)
+                                }} id="aplikasi" className={collapsed ? 'nav-item submenu' : 'nav-item'}>
+                                    <a data-toggle="collapse" href="#aplikasi" className={collapsed ? 'aria-expanded="true"' : ''}>
                                         <i className="fa fa-cubes" />
                                         <p>Penjualan</p>
                                         <span className="caret" />

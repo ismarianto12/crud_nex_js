@@ -1,0 +1,22 @@
+[
+    {
+        "path": "/kategori",
+        "name": "Kategori"
+    },
+    {
+        "path": "/jenis",
+        "name": "Jenis"
+    },
+    {
+        "path": "/barang",
+        "name": "Barang"
+    },
+    {
+        "path": "/purchase",
+        "name": "Purchase"
+    },
+    {
+        "path": "/return",
+        "name": "Return"
+    }
+]

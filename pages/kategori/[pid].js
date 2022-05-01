@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import Templates from "../../compnents/templates"
 import { useRouter } from 'next/router'
 import { eventually } from "pos/lexicon";
 import Router from 'next/router';
 import { Modal, Button } from 'react-bootstrap';
+
 export default function Kategori() {
+
     const [value, setValue] = useState({
         kategori: '',
         kode: '',
@@ -14,6 +16,12 @@ export default function Kategori() {
     const [createObjectURL, setCreateObjectURL] = useState(null);
     const [error, setError] = useState();
     const [modal, setModal] = useState(false);
+    const [modalcontainer, setModalmodalcontainer] = useState('');
+
+    const [hanldedata, setHanldedata] = useState();
+    const [parsing, setParsing] = useState(false);
+
+
     const router = useRouter();
     const { pid } = router.query;
     const handleChange = (e) => {
@@ -28,7 +36,12 @@ export default function Kategori() {
             setError(false);
         }
         if (e.target.id == 'kode') {
-            setModal(true);
+            setParsing(true);
+            setModalmodalcontainer(
+                <>
+                    <Tabledt></Tabledt>
+                </>
+            )
             console.log('asdads' + modal);
         }
         if (e.target.id == 'gambar') {
@@ -40,9 +53,7 @@ export default function Kategori() {
                 alert('jenis file tidak di dukung');
             }
         }
-    }
-
-
+    } 
     useEffect(() => {
         if (pid == 'edit') {
             setValue({
@@ -65,7 +76,6 @@ export default function Kategori() {
         console.log('asdsad' + e.target.files);
         setError(false);
         if (pid == 'edit') {
-
             fetch('/api/edit', {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
@@ -93,9 +103,13 @@ export default function Kategori() {
         }
 
     }
+    const handleClose = () => {
+        setModal(false);
+    }
+
+
 
     return (
-        // Template()
         <Templates container={
             <>
 
@@ -142,9 +156,7 @@ export default function Kategori() {
                     </div>
                 </div>
 
-                {/* {modal ? (<Modal open={true} />) : ''} */}
-                <Kl open={true} />
-
+                <Dtmodal modalcontainer={modalcontainer} parsing={parsing} />
             </>
 
         } />
@@ -152,24 +164,73 @@ export default function Kategori() {
 
 }
 
+const Dtmodal = (modalcontainer, parsing) => {
+    const [modal, setModal] = useState(false);
+    useEffect(() => {
+        modal = parsing;
+    }, [parsing])
 
-function Kl({ open }) {
+    const handleClose = () => {
+        setModal(false);
+    }
+
+    return (
+
+        <Modal show={modal}>
+            <Modal.Header>
+                <Modal.Title>Modal heading</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>{modalcontainer}</Modal.Body>
+            <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                <Button variant="primary">
+                    Save Changes
+                </Button>
+            </Modal.Footer>
+        </Modal>
+    )
+}
+
+
+function Tabledt() {
+    const setUp = (e) => {
+
+        alert(e.target.value);
+        // return (<Dtmodal modalcontainer={'Loading ...'} parsing={true} />)
+    }
     return (
         <>
-            <Modal show={true} onHide={false}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-                <Modal.Footer>
-                    {/* <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button> */}
-                </Modal.Footer>
-            </Modal>
+            {/* <Dtmodal modalcontainer={'Loading ...'} parsing={false} /> */}
+            <table className="table mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">First</th>
+                        <th scope="col">Last</th>
+                        <th scope="col">Handle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><input type="radio" onClick={(e) => setUp(e)} id="kat" value="1"></input></td>
+                        <td>Otto</td>
+                        <td>@mdo</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="radio" onClick={(e) => setUp(e)} id="kat" value="2"></input></td>                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><input type="radio" onClick={(e) => setUp(e)} id="kat" value="1"></input></td>                        <td>Thornton</td>
+                        <td>@fat</td>
+                    </tr>
+                </tbody>
+            </table>
         </>
     )
 }
