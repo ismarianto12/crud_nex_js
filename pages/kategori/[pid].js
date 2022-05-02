@@ -5,7 +5,6 @@ import Router from 'next/router';
 import { Modal, Button } from 'react-bootstrap';
 
 export default function Kategori() {
-
     const [value, setValue] = useState({
         kategori: '',
         kode: '',

@@ -10,9 +10,7 @@ import {
     userService
 } from 'services';
 
-export {
-    // RouteGuard
-};
+export {};
 
 function RouteGuard({
     children
@@ -31,7 +29,6 @@ function RouteGuard({
         // on route change complete - run auth check 
         router.events.on('routeChangeComplete', authCheck)
 
-        // unsubscribe from events in useEffect return function
         return () => {
             router.events.off('routeChangeStart', hideContent);
             router.events.off('routeChangeComplete', authCheck);

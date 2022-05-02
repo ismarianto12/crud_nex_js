@@ -6,9 +6,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import Templates from '../compnents/templates';
 import 'font-awesome/css/font-awesome.min.css'; //import in react app
-
 export default function Home() {
-
   const [income, setIncome] = useState();
   const [loc, setLoc] = useState({
     username: ''
@@ -22,20 +20,17 @@ export default function Home() {
       username: parsing
     });
     console.log(parsing);
-
   }, [])
   return (
     <Templates container={
       <>
-
         <div className="panel-header bg-primary-gradient">
           <div className="page-inner py-5">
             <div className="d-flex align-items-left align-items-md-center flex-column flex-md-row">
               <div>
                 <h2 className="text-white pb-2 fw-bold">Dashboard</h2>
                 <h5 className="text-white op-7 mb-2">
-                  Free Bootstrap 4 Admin Dashboard
-                </h5>
+                 </h5>
               </div>
               <div className="ml-md-auto py-2 py-md-0">
                 <a href="#" className="btn btn-white btn-border btn-round mr-2">
